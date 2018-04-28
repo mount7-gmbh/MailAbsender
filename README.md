@@ -4,6 +4,8 @@ MailAbsender
 ### Shopversion
 OXID eShop 6
 
+Zur OXID 4-Version: [Klick](../../tree/oxid4)
+
 
 ### Features
 Als Absender der Bestellmails wird der Name des Bestellers, als Absender der Kontaktformular-Nachrichten die Emailadresse des Absenders verwendet.
