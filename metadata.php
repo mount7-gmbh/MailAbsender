@@ -17,17 +17,17 @@
  *    along with this program.  If not, see {http://www.gnu.org/licenses/}.
  */
 
-$sMetadataVersion = '2.0';
-$aModule = array(
+$sMetadataVersion   = '2.0';
+$aModule            = [
     'id'            => 'ecs_mailabsender',
     'title'         => '<strong style="color:#04B431;">e</strong><strong>ComStyle.de</strong>:  <i>MailAbsender</i>',
     'description'   => '<i>Als Absender der Bestellmails wird der Name des Bestellers, als Absender der Kontaktformular-Nachrichten die Emailadresse des Absenders verwendet.</i>',
-    'version'       => '2.0.1',
+    'version'       => '2.0.2',
     'thumbnail'     => 'ecs.png',
     'author'        => '<strong style="font-size: 17px;color:#04B431;">e</strong><strong style="font-size: 16px;">ComStyle.de</strong>',
-    'email'         => 'support@ecomstyle.de',
+    'email'         => 'info@ecomstyle.de',
     'url'           => 'https://ecomstyle.de',
-    'extend'        => array(
+    'extend'        => [
         \OxidEsales\Eshop\Core\Email::class => Ecs\MailAbsender\Core\Email::class,
-    ),
-);
+    ],
+];
