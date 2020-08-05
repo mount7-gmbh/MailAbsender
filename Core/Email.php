@@ -1,5 +1,4 @@
 <?php
-
 /*    Please retain this copyright header in all versions of the software
  *
  *    Copyright (C) Josef A. Puckl | eComStyle.de
@@ -19,6 +18,9 @@
  */
 
 namespace Ecs\MailAbsender\Core;
+
+use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererBridgeInterface;
 
 class Email extends Email_parent
 {
@@ -110,9 +112,21 @@ class Email extends Email_parent
         $this->setRecipient($shop->oxshops__oxinfoemail->value, "");
         // Original: $this->setFrom($shop->oxshops__oxowneremail->value, $shop->oxshops__oxname->getRawValue());
         //START:
-        $this->setFrom($emailAddress, "");
+        if ($emailAddress) {
+            $this->setFrom($emailAddress, "");
+        } else {
+            $this->setFrom($shop->oxshops__oxowneremail->value, $shop->oxshops__oxname->getRawValue());
+        }
         //END
         $this->setReplyTo($emailAddress, "");
         return $this->send();
+    }
+
+    private function getRenderer()
+    {
+        $bridge = $this->getContainer()->get(TemplateRendererBridgeInterface::class);
+        $bridge->setEngine($this->_getSmarty());
+
+        return $bridge->getTemplateRenderer();
     }
 }
