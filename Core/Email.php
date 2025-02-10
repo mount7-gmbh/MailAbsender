@@ -21,23 +21,10 @@ namespace Ecs\MailAbsender\Core;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererBridgeInterface;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 
 class Email extends Email_parent
 {
-    public function __construct()
-    {
-        parent::__construct();
-
-        if (!method_exists($this, 'getRenderer')) {
-            $this->getRenderer = function () {
-                $bridge = $this->getContainer()->get(TemplateRendererBridgeInterface::class);
-                $bridge->setEngine($this->_getSmarty());
-
-                return $bridge->getTemplateRenderer();
-            };
-        }
-    }
-
     public function sendOrderEmailToOwner($order, $subject = null)
     {
         $config = Registry::getConfig();
@@ -77,7 +64,9 @@ class Email extends Email_parent
         $this->setSmtp($shop);
 
         // create messages
-        $renderer = $this->getRenderer();
+        $container = ContainerFactory::getInstance()->getContainer();
+        $bridge = $container->get(TemplateRendererBridgeInterface::class);
+        $renderer = $bridge->getTemplateRenderer();
         $this->setViewData("order", $order);
 
         // Process view data array through oxoutput processor
