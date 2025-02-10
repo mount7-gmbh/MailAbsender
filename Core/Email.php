@@ -24,6 +24,19 @@ use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererBrid
 
 class Email extends Email_parent
 {
+    public function __construct()
+    {
+        parent::__construct();
+
+        if (!method_exists($this, 'getRenderer')) {
+            $this->getRenderer = function () {
+                $bridge = $this->getContainer()->get(TemplateRendererBridgeInterface::class);
+                $bridge->setEngine($this->_getSmarty());
+
+                return $bridge->getTemplateRenderer();
+            };
+        }
+    }
 
     public function sendOrderEmailToOwner($order, $subject = null)
     {
@@ -121,13 +134,5 @@ class Email extends Email_parent
         //END
         $this->setReplyTo($emailAddress, "");
         return $this->send();
-    }
-
-    private function getRenderer()
-    {
-        $bridge = $this->getContainer()->get(TemplateRendererBridgeInterface::class);
-        $bridge->setEngine($this->_getSmarty());
-
-        return $bridge->getTemplateRenderer();
     }
 }
