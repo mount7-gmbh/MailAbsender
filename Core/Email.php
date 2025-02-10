@@ -44,6 +44,7 @@ class Email extends Email_parent
         // send not pretending from order user, as different email domain rise spam filters
 
         // Original: $this->setFrom($shop->oxshops__oxowneremail->value);
+        $sFullName = '';
         if ($user->oxuser__oxcompany->value) {
             $sFullName = $user->oxuser__oxcompany->getRawValue() . ' | ';
         }
